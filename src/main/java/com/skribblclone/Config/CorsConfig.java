@@ -12,6 +12,7 @@ public class CorsConfig implements WebMvcConfigurer {
 
         registry.addMapping("/**")
                 .allowedOrigins(
+                        "https://skribble-frontend-sigma.vercel.app",
                         "https://skribble-frontend-u0fhi41mn-ruby-b518.vercel.app",
                         "http://localhost:5173"
                 )
