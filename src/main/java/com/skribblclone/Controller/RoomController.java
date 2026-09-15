@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/rooms")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://skribble-frontend-sigma.vercel.app")
 public class RoomController {
     private final RoomService roomService;
     private final SimpMessagingTemplate messagingTemplate;
