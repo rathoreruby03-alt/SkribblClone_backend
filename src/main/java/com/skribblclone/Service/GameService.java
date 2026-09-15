@@ -73,6 +73,10 @@ public class GameService {
         }
 
         Game game = room.getGame();
+        if (game == null) {
+            game = new Game();
+            room.setGame(game);
+        }
         game.setMaxHints(room.getHints());
 
         game.setGameStatus("PLAYING");
