@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/rooms")
 @CrossOrigin(origins = "http://localhost:5173")
@@ -72,5 +74,11 @@ public class RoomController {
         );
 
         return ResponseEntity.ok(room);
+    }
+    @GetMapping("/public")
+    public ResponseEntity<List<Room>> getPublicRooms() {
+        return ResponseEntity.ok(
+                roomService.getPublicRooms()
+        );
     }
 }

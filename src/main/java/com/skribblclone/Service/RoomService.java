@@ -6,6 +6,7 @@ import com.skribblclone.Entity.RoomEntity;
 import com.skribblclone.Repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -203,5 +204,10 @@ public class RoomService {
         }
 
         return room;
+    }
+    public List<Room> getPublicRooms() {
+        return rooms.values().stream()
+                .filter(room -> !room.isPrivateRoom())
+                .toList();
     }
 }
