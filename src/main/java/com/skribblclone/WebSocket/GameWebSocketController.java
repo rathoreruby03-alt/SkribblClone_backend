@@ -1,6 +1,7 @@
 package com.skribblclone.WebSocket;
 
 import com.skribblclone.Entity.Game;
+import com.skribblclone.Entity.Room;
 import com.skribblclone.Service.GameService;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -28,7 +29,16 @@ public class GameWebSocketController {
                 message.getHostId()
         );
 
-        // Send public game information
+        // 1. Fetch the updated room from service
+        Room room = gameService.getRoom(message.getRoomId());
+
+        // 2. Broadcast updated Room object (Triggers Lobby.jsx `/topic/room/{roomId}` subscription)
+        messagingTemplate.convertAndSend(
+                "/topic/room/" + message.getRoomId(),
+                room
+        );
+
+        // 3. Send public game information
         PublicGameMessage publicGame =
                 new PublicGameMessage(game);
 
@@ -37,7 +47,7 @@ public class GameWebSocketController {
                 publicGame
         );
 
-        // Send word options only to the drawer
+        // 4. Send word options only to the drawer
         DrawerGameMessage drawerGame =
                 new DrawerGameMessage(game);
 
