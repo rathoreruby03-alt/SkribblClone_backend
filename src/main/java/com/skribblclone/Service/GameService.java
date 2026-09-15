@@ -31,7 +31,28 @@ public class GameService {
 
     public Game startGame(String roomId, String hostId) {
 
+
         Room room = roomService.getRoom(roomId);
+
+        System.out.println("===== START GAME REQUEST RECEIVED =====");
+        System.out.println("Room ID: " + roomId);
+        System.out.println("Host ID: " + hostId);
+
+
+        System.out.println("Room found: " + (room != null));
+
+        if (room == null) {
+            throw new RuntimeException("Room not found");
+        }
+
+        System.out.println("Actual Host ID: " + room.getHostId());
+        System.out.println("Players: " + room.getPlayers().size());
+
+        boolean allReady = room.getPlayers()
+                .stream()
+                .allMatch(Player::isReady);
+
+        System.out.println("All players ready: " + allReady);
 
         if (room == null) {
             throw new RuntimeException("Room not found");
@@ -44,10 +65,6 @@ public class GameService {
         if (room.getPlayers().size() < 2) {
             throw new RuntimeException("At least 2 players are required");
         }
-
-        boolean allReady = room.getPlayers()
-                .stream()
-                .allMatch(Player::isReady);
 
         if (!allReady) {
             throw new RuntimeException(
